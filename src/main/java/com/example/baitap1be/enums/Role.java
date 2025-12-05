@@ -1,0 +1,8 @@
+package com.example.baitap1be.enums;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+@JsonFormat(shape = JsonFormat.Shape.STRING)
+public enum Role {
+    STAFF, MANAGER, ADMIN
+}
