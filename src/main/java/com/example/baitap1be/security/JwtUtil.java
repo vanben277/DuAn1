@@ -19,7 +19,7 @@ import java.util.function.Function;
 @Slf4j
 public class JwtUtil {
     private final String SECRET_KEY = "DayLaMotCaiKeyRatDaiDeDamBaoBaoMatChoJWT123456";
-    private final long EXPIRATION_TIME = 1000 * 60 * 60 * 10; // 10 tiếng
+    private final long EXPIRATION_TIME = 30 * 60 * 1000; // 30 phút
     private final Key key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
 
     public String generateToken(User user) {
