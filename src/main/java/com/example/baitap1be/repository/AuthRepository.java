@@ -4,5 +4,8 @@ import com.example.baitap1be.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-public interface UserRepository extends JpaRepository<User, Integer>, JpaSpecificationExecutor<User> {
+import java.util.Optional;
+
+public interface AuthRepository extends JpaRepository<User, Integer>, JpaSpecificationExecutor<User> {
+    Optional<User> findByUserCode(String userCode);
 }
