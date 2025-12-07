@@ -57,15 +57,16 @@ public class SecurityConfig {
                                 HttpMethod.OPTIONS,
                                 "/**"
                         ).permitAll()
-
                         .requestMatchers(
                                 HttpMethod.GET,
-                                "/api/v1/users/filters"
+                                "/api/v1/users/filters",
+                                "/api/v1/users/roles",
+                                "/api/v1/stores"
                         ).hasRole("ADMIN")
                         .requestMatchers(
-                                HttpMethod.GET,
-                                "/api/v1/stores"
-                        ).authenticated()
+                                HttpMethod.POST,
+                                "/api/v1/users/register"
+                        ).hasAnyRole("ADMIN")
 
                         .anyRequest().authenticated()
                 )
