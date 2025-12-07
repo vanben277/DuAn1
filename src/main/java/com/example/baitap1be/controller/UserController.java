@@ -3,8 +3,10 @@ package com.example.baitap1be.controller;
 import com.example.baitap1be.dto.ApiResponse;
 import com.example.baitap1be.dto.req.FilterRequest;
 import com.example.baitap1be.dto.req.RegisterRequest;
+import com.example.baitap1be.dto.req.UpdateUserRequest;
 import com.example.baitap1be.dto.res.FilterResponse;
 import com.example.baitap1be.dto.res.RegisterResponse;
+import com.example.baitap1be.dto.res.UpdateUserResponse;
 import com.example.baitap1be.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -37,5 +39,17 @@ public class UserController {
     public ResponseEntity<ApiResponse> getRoles() {
         List<String> list = userService.getRoles();
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Lấy danh sách role thành công", list));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponse> updateUser(@PathVariable Integer id, @Valid @RequestBody UpdateUserRequest updateUserRequest) {
+        UpdateUserResponse user = userService.updateUser(id, updateUserRequest);
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Cập nhật thành công", user));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse> deleteUserById(@PathVariable Integer id) {
+        userService.deleteUserById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Thành công", null));
     }
 }
