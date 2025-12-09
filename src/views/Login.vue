@@ -200,18 +200,37 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { login } from "../apis/authApi";
 
+const router = useRouter();
 const userId = ref("");
 const password = ref("");
 const storeId = ref("");
 const rememberMe = ref(false);
+const errorMessage = ref("");
 
-const handleLogin = () => {
-  console.log("Login clicked", {
-    userId: userId.value,
-    password: password.value,
-    storeId: storeId.value,
-    rememberMe: rememberMe.value,
-  });
+const handleLogin = async () => {
+  try {
+    const res = await login({
+      userCode: userId.value,
+      password: password.value,
+      storeCode: storeId.value
+    });
+
+    const { accessToken, refreshToken, role, fullName, userCode } = res.data.data;
+    localStorage.setItem("accessToken", accessToken);
+    localStorage.setItem("refreshToken", refreshToken);
+    localStorage.setItem("userRole", role);
+    localStorage.setItem("fullName", fullName);
+    localStorage.setItem("userCode", userCode);
+
+    router.push("/users");
+    
+  } catch (error: any) {
+    console.error(error);
+    errorMessage.value = error.response?.data?.message || "Đăng nhập thất bại";
+    alert(errorMessage.value);
+  }
 };
 </script>

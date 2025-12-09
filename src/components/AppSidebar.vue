@@ -1,24 +1,25 @@
 <script setup lang="ts">
-import { defineProps, defineEmits } from 'vue';
+import { useRouter } from 'vue-router';
 
-// Định nghĩa Props nhận từ cha
+const router = useRouter();
+
 defineProps<{
   activeMenu: string
 }>();
 
-// Định nghĩa sự kiện gửi ngược lại cho cha
 const emit = defineEmits(['update:menu']);
 
 const menuItems = [
-  { id: 'dashboard', label: 'Dashboard Display', color: '#708090' },
-  { id: 'user', label: 'User Management', color: '#808080' },
-  { id: 'contract', label: 'Contract Management', color: '#696969' },
-  { id: 'chip', label: 'Chip Registration', color: '#5c5c5c' },
-  { id: 'data', label: 'Data Import', color: '#505050' }
+  { id: 'dashboard', label: 'Dashboard Display', color: '#708090', path: '/dashboard' },
+  { id: 'user', label: 'User Management', color: '#808080', path: '/users' }
 ];
 
-const handleMenuClick = (id: string) => {
-  emit('update:menu', id);
+const handleMenuClick = (item: any) => {
+  emit('update:menu', item.id);
+  
+  if (item.path) {
+    router.push(item.path);
+  }
 };
 </script>
 
@@ -27,7 +28,7 @@ const handleMenuClick = (id: string) => {
     <div
       v-for="item in menuItems"
       :key="item.id"
-      @click="handleMenuClick(item.id)"
+      @click="handleMenuClick(item)"
       class="menu-item"
       :style="{
         background: activeMenu === item.id ? item.color : '#fff',
@@ -54,5 +55,8 @@ const handleMenuClick = (id: string) => {
   font-size: 13px;
   border-bottom: 1px solid #ddd;
   transition: background 0.2s;
+}
+.menu-item:hover {
+    opacity: 0.8;
 }
 </style>

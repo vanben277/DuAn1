@@ -1,8 +1,30 @@
 <script setup lang="ts">
-// Logic xử lý logout nếu cần
-const handleLogout = () => {
-  console.log('Logout clicked');
-  // router.push('/login')
+import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+import { logout } from '../apis/authApi';
+
+const router = useRouter();
+
+const userCode = ref('Loading...');
+const fullName = ref('Loading...');
+
+onMounted(() => {
+  const storedUserCode = localStorage.getItem('userCode');
+  const storedFullName = localStorage.getItem('fullName');
+
+  if (storedUserCode) userCode.value = storedUserCode;
+  if (storedFullName) fullName.value = storedFullName;
+});
+
+const handleLogout = async () => {
+  try {
+    await logout();
+  } catch (error) {
+    console.error("Logout error (server side):", error);
+  } finally {
+    localStorage.clear();
+    router.push('/');
+  }
 };
 </script>
 
@@ -14,11 +36,11 @@ const handleLogout = () => {
     <div class="user-info">
       <div class="info-item">
         <span>User ID: </span>
-        <span class="value">123456</span>
+        <span class="value">{{ userCode }}</span>
       </div>
       <div class="info-item">
         <span>User Name: </span>
-        <span class="value">〇〇〇</span>
+        <span class="value">{{ fullName }}</span>
       </div>
       <button class="logout-btn" @click="handleLogout">
         Logout
