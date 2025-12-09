@@ -6,6 +6,7 @@ import com.example.baitap1be.dto.req.UpdateUserRequest;
 import com.example.baitap1be.dto.res.FilterResponse;
 import com.example.baitap1be.dto.res.RegisterResponse;
 import com.example.baitap1be.dto.res.UpdateUserResponse;
+import com.example.baitap1be.dto.res.UserDetailResponse;
 import com.example.baitap1be.entity.Store;
 import com.example.baitap1be.entity.User;
 import com.example.baitap1be.enums.Role;
@@ -183,5 +184,22 @@ public class UserServiceImpl implements UserService {
         user.setTokenVersion(user.getTokenVersion() + 1);
 
         userRepository.save(user);
+    }
+
+    @Override
+    public UserDetailResponse getUserDetail(Integer id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(ErrorCodeConstant.USER_NOT_FOUND, "Người dùng không tồn tại"));
+
+        return UserDetailResponse.builder()
+                .id(user.getId())
+                .userCode(user.getUserCode())
+                .fullName(user.getFullName())
+                .email(user.getEmail())
+                .role(user.getRole().name())
+                .storeCode(user.getStore() != null ? user.getStore().getStoreCode() : "")
+                .storeName(user.getStore() != null ? user.getStore().getStoreName() : "")
+                .isActive(user.getIsActive())
+                .build();
     }
 }

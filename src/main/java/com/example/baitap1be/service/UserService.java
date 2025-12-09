@@ -6,6 +6,7 @@ import com.example.baitap1be.dto.req.UpdateUserRequest;
 import com.example.baitap1be.dto.res.FilterResponse;
 import com.example.baitap1be.dto.res.RegisterResponse;
 import com.example.baitap1be.dto.res.UpdateUserResponse;
+import com.example.baitap1be.dto.res.UserDetailResponse;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 
@@ -21,4 +22,6 @@ public interface UserService {
     UpdateUserResponse updateUser(Integer id, UpdateUserRequest updateUserRequest);
 
     void deleteUserById(Integer id);
+
+    UserDetailResponse getUserDetail(Integer id);
 }

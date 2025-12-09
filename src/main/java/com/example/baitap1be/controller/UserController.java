@@ -7,6 +7,7 @@ import com.example.baitap1be.dto.req.UpdateUserRequest;
 import com.example.baitap1be.dto.res.FilterResponse;
 import com.example.baitap1be.dto.res.RegisterResponse;
 import com.example.baitap1be.dto.res.UpdateUserResponse;
+import com.example.baitap1be.dto.res.UserDetailResponse;
 import com.example.baitap1be.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -51,5 +52,11 @@ public class UserController {
     public ResponseEntity<ApiResponse> deleteUserById(@PathVariable Integer id) {
         userService.deleteUserById(id);
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Thành công", null));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse> getUserDetail(@PathVariable Integer id) {
+        UserDetailResponse response = userService.getUserDetail(id);
+        return ResponseEntity.ok(new ApiResponse("Lấy thông tin người dùng thành công", response));
     }
 }

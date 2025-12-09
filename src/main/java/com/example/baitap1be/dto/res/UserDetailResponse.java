@@ -1,19 +1,21 @@
 package com.example.baitap1be.dto.res;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class FilterResponse {
+@Builder
+public class UserDetailResponse {
     private Integer id;
     private String userCode;
     private String fullName;
+    private String email;
+    private String role;
+
     private String storeCode;
     private String storeName;
-    private String role;
+
+    private Boolean isActive;
 }

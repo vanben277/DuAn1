@@ -61,12 +61,12 @@ public class SecurityConfig {
                                 HttpMethod.GET,
                                 "/api/v1/users/filters",
                                 "/api/v1/users/roles",
+                                "/api/v1/users/{id}",
                                 "/api/v1/stores"
                         ).hasRole("ADMIN")
                         .requestMatchers(
                                 HttpMethod.POST,
-                                "/api/v1/users/register",
-                                "/api/v1/users/{id}"
+                                "/api/v1/users/register"
                         ).hasAnyRole("ADMIN")
                         .requestMatchers(
                                 HttpMethod.PUT,
